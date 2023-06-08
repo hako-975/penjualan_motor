@@ -8,7 +8,7 @@
     $id_pelanggan = $_GET['id_pelanggan'];
     $data_pelanggan = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT * FROM pelanggan WHERE id_pelanggan = '$id_pelanggan'"));
 
-    if (isset($_POST['btnTambah'])) {
+    if (isset($_POST['btnUbah'])) {
         $nama_pelanggan = $_POST['nama_pelanggan'];
         $no_telepon_pelanggan = $_POST['no_telepon_pelanggan'];
         $alamat_pelanggan = $_POST['alamat_pelanggan'];
@@ -56,7 +56,7 @@
                 <label class="label" for="alamat_pelanggan">Alamat Pelanggan</label>
                 <textarea class="input" id="alamat_pelanggan" name="alamat_pelanggan" required><?= $data_pelanggan['alamat_pelanggan']; ?></textarea>
 
-                <button type="submit" class="button align-right" name="btnTambah">Submit</button>
+                <button type="submit" class="button align-right" name="btnUbah">Submit</button>
             </form>
         </div>
     </div>
