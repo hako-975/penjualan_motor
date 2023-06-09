@@ -273,7 +273,7 @@ body {
 }
 
 .card {
-  background-color: #0e153a;
+  background-color: #E95434;
   color: #fff;
   border-radius: 10px;
   padding: 10px 30px;
@@ -320,4 +320,25 @@ body {
 .head-right {
   float: right;
   margin: auto;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+}
+
+.col {
+  margin-right: 20px;
+  margin-bottom: 10px;
+  flex: flex: 1 0 0%;
+}
+
+.col:last-child {
+  margin-right: 0;
+}
+
+.justify-content-between {
+  justify-content: space-between;
 }
