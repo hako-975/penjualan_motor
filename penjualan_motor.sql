@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 08 Jun 2023 pada 04.53
+-- Waktu pembuatan: 12 Jun 2023 pada 03.50
 -- Versi server: 10.4.27-MariaDB
 -- Versi PHP: 8.2.0
 
@@ -76,7 +76,6 @@ INSERT INTO `motor` (`id_motor`, `nama`, `merk`, `tahun`, `harga`) VALUES
 (34, 'Sonic 150', 'Honda', 2022, 19000000),
 (35, 'KLX 150', 'Kawasaki', 2021, 29000000),
 (36, 'CRF250Rally', 'Honda', 2022, 35000000),
-(37, 'Z250', 'Kawasaki', 2021, 40000000),
 (38, 'Ninja 400', 'Kawasaki', 2022, 60000000),
 (39, 'CBR500R', 'Honda', 2021, 68000000),
 (40, 'GSX-S750', 'Suzuki', 2022, 90000000),
@@ -177,34 +176,33 @@ CREATE TABLE `penjualan` (
   `id_penjualan` int(11) NOT NULL,
   `tanggal` date NOT NULL,
   `id_pelanggan` int(11) NOT NULL,
-  `id_motor` int(11) NOT NULL
+  `id_motor` int(11) NOT NULL,
+  `pembayaran` enum('Cash','Kredit') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `penjualan`
 --
 
-INSERT INTO `penjualan` (`id_penjualan`, `tanggal`, `id_pelanggan`, `id_motor`) VALUES
-(1, '2023-06-01', 1, 1),
-(2, '2023-06-02', 2, 3),
-(3, '2023-06-03', 3, 5),
-(4, '2023-06-04', 4, 7),
-(5, '2023-06-05', 5, 10),
-(6, '2023-06-06', 6, 13),
-(7, '2023-06-07', 7, 16),
-(8, '2023-06-08', 8, 19),
-(9, '2023-06-09', 9, 22),
-(10, '2023-06-10', 10, 25),
-(11, '2023-06-11', 11, 28),
-(12, '2023-06-12', 12, 31),
-(13, '2023-06-13', 13, 34),
-(14, '2023-06-14', 14, 37),
-(15, '2023-06-15', 15, 40),
-(16, '2023-06-16', 16, 43),
-(17, '2023-06-17', 17, 46),
-(18, '2023-06-18', 18, 49),
-(19, '2023-06-19', 19, 52),
-(20, '2023-06-20', 20, 55);
+INSERT INTO `penjualan` (`id_penjualan`, `tanggal`, `id_pelanggan`, `id_motor`, `pembayaran`) VALUES
+(1, '2023-06-01', 1, 1, 'Cash'),
+(2, '2023-06-02', 2, 3, 'Cash'),
+(3, '2023-06-03', 3, 5, 'Cash'),
+(4, '2023-06-04', 4, 7, 'Cash'),
+(5, '2023-06-05', 5, 10, 'Cash'),
+(6, '2023-06-06', 6, 13, 'Cash'),
+(8, '2023-06-08', 8, 19, 'Cash'),
+(9, '2023-06-09', 9, 22, 'Cash'),
+(10, '2023-06-10', 10, 25, 'Cash'),
+(11, '2023-06-11', 11, 28, 'Cash'),
+(12, '2023-06-12', 12, 31, 'Cash'),
+(13, '2023-06-13', 13, 34, 'Cash'),
+(15, '2023-06-15', 15, 40, 'Cash'),
+(16, '2023-06-16', 16, 43, 'Cash'),
+(17, '2023-06-17', 17, 46, 'Cash'),
+(18, '2023-06-18', 18, 49, 'Cash'),
+(19, '2023-06-19', 19, 52, 'Cash'),
+(20, '2023-06-09', 7, 59, 'Cash');
 
 -- --------------------------------------------------------
 
@@ -247,8 +245,8 @@ ALTER TABLE `pelanggan`
 --
 ALTER TABLE `penjualan`
   ADD PRIMARY KEY (`id_penjualan`),
-  ADD KEY `id_pelanggan` (`id_pelanggan`),
-  ADD KEY `id_motor` (`id_motor`);
+  ADD KEY `penjualan_ibfk_1` (`id_pelanggan`),
+  ADD KEY `penjualan_ibfk_2` (`id_motor`);
 
 --
 -- Indeks untuk tabel `user`
@@ -264,19 +262,19 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT untuk tabel `motor`
 --
 ALTER TABLE `motor`
-  MODIFY `id_motor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
+  MODIFY `id_motor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
 
 --
 -- AUTO_INCREMENT untuk tabel `pelanggan`
 --
 ALTER TABLE `pelanggan`
-  MODIFY `id_pelanggan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id_pelanggan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT untuk tabel `penjualan`
 --
 ALTER TABLE `penjualan`
-  MODIFY `id_penjualan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id_penjualan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT untuk tabel `user`
@@ -292,8 +290,8 @@ ALTER TABLE `user`
 -- Ketidakleluasaan untuk tabel `penjualan`
 --
 ALTER TABLE `penjualan`
-  ADD CONSTRAINT `penjualan_ibfk_1` FOREIGN KEY (`id_pelanggan`) REFERENCES `pelanggan` (`id_pelanggan`),
-  ADD CONSTRAINT `penjualan_ibfk_2` FOREIGN KEY (`id_motor`) REFERENCES `motor` (`id_motor`);
+  ADD CONSTRAINT `penjualan_ibfk_1` FOREIGN KEY (`id_pelanggan`) REFERENCES `pelanggan` (`id_pelanggan`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `penjualan_ibfk_2` FOREIGN KEY (`id_motor`) REFERENCES `motor` (`id_motor`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
